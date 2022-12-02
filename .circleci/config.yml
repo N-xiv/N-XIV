@@ -1,0 +1,26 @@
+version: 2.1
+jobs:
+  compile:
+   docker:
+      - image: ubuntu:latest
+   steps:
+      - run:
+          name: proses anu
+          command: |
+           apt-get -y update && apt-get -y upgrade && apt-get -y install curl git python3 python-is-python3
+           git config --global user.name "Bazzing606"
+           git config --global user.email "erzatp720@gmail.com"
+           git config --global color.ui false
+           pwd
+           mkdir -p ~/.bin
+           PATH="${HOME}/.bin:${PATH}"
+           curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
+           chmod a+rx ~/.bin/repo
+           git clone https://github.com/Bazzing606/Bazzing606 -b main .
+           bash .circleci/build.sh
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - compile
+
